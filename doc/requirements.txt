@@ -1,0 +1,5 @@
+sphinx
+sphinx_book_theme
+
+# Install ourselves
+.
