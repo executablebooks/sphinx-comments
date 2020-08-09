@@ -1,6 +1,7 @@
 """Add a hypothes.is overlay to your Sphinx site."""
 
 import os
+from docutils import nodes
 from sphinx.util import logging
 
 __version__ = "0.0.1"
@@ -13,28 +14,70 @@ def shp_static_path(app):
 
 def activate_comments(app, pagename, templatename, context, doctree):
     """Activate commenting on each page."""
-    kind = app.config.sphinx_comments.get("kind")
-    # Load the hypothes.is script
-    config = {"async": "async"}
+    config = app.config.comments_config
+    if not isinstance(config, (dict, type(None))):
+        raise ValueError("Comments configuration must be a dictionary.")
 
-    if kind in ["hypothes.is", "hypothesis"]:
+    extra_config = {"async": "async"}
+    if config.get("hypothesis"):
         # If hypothesis, we just need to load the js library
-        app.add_js_file("https://hypothes.is/embed.js", **config)
-    elif kind in ["utterances"]:
-        # Utterances needs the script placed where the comments will go.
-        script = """
-        <script src="https://utteranc.es/client.js"
-            repo="executablebooks/sphinx-comments"
-            issue-term="pathname"
-            theme="github-light"
-            crossorigin="anonymous"
-            async>
-        </script>
+        app.add_js_file("https://hypothes.is/embed.js", **extra_config)
+
+    if config.get("utterances"):
+        dom = """
+            const runWhenDOMLoaded = cb => {
+            if (document.readyState != 'loading') {
+                cb()
+            } else if (document.addEventListener) {
+                document.addEventListener('DOMContentLoaded', cb)
+            } else {
+                document.attachEvent('onreadystatechange', function() {
+                if (document.readyState == 'complete') cb()
+                })
+            }
+            }
         """
+        if doctree:
+            js = f"""
+            {dom}
+            var addUtterances = () => {{
+                section = document.querySelectorAll("div.section")[1]
+                var script = document.createElement("script");
+                script.type = "text/javascript";
+                script.src = "https://utteranc.es/client.js";
+                script.async = "async";
+
+                script.setAttribute("repo", "executablebooks/sphinx-comments");
+                script.setAttribute("issue-term", "pathname");
+                script.setAttribute("theme", "github-light");
+                script.setAttribute("label", "💬 comment");
+                script.setAttribute("crossorigin", "anonymous");
+                section.appendChild(script);
+            }}
+            runWhenDOMLoaded(addUtterances)
+
+            """
+            app.add_js_file(None, body=js)
+
+
+class UtterancesScriptNode(nodes.Element):
+    """Appends the Utterances script to the output HTML.
+    """
+
+    def __init__(self, rawsource="", repo=None, *children, **attributes):
+        super().__init__("", repo=repo)
+
+    def html(self):
+
+        return script
+
+    def depart_html(self):
+        return "</script>"
 
 
 def setup(app):
-    logger.verbose('Adding copy buttons to code blocks...')
+    app.add_config_value("comments_config", {}, "html")
+
     # Add our static path
     app.connect('builder-inited', shp_static_path)
     app.connect('html-page-context', activate_comments)

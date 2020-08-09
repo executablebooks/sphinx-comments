@@ -40,6 +40,10 @@ release = ''
 # ones.
 extensions = ['sphinx_comments', "myst_parser"]
 
+comments_config = {
+    "hypothesis": True,
+    "utterances": True
+}
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
