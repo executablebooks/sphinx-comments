@@ -1,30 +1,30 @@
-# sphinx-hypothesis
+# sphinx-comments
 
-[![PyPI](https://img.shields.io/pypi/v/sphinx-hypothesis.svg)](https://pypi.org/project/sphinx_hypothesis/) | [![Documentation](https://readthedocs.org/projects/sphinx-hypothesis/badge/?version=latest)](https://sphinx-hypothesis.readthedocs.io/en/latest/?badge=latest)
+[![PyPI](https://img.shields.io/pypi/v/sphinx-comments.svg)](https://pypi.org/project/sphinx_comments/) | [![Documentation](https://readthedocs.org/projects/sphinx-comments/badge/?version=latest)](https://sphinx-comments.readthedocs.io/en/latest/?badge=latest)
 
 A small sphinx extension to add a "copy" button to code blocks.
 
-See [the sphinx-hypothesis documentation](https://sphinx-hypothesis.readthedocs.io/en/latest/) for more details!
+See [the sphinx-comments documentation](https://sphinx-comments.readthedocs.io/en/latest/) for more details!
 
 ![](doc/_static/copybutton.gif)
 
 ## Installation
 
-You can install `sphinx-hypothesis` with `pip`:
+You can install `sphinx-comments` with `pip`:
 
 ```
-pip install sphinx-hypothesis
+pip install sphinx-comments
 ```
 
 ## Usage
 
-In your `conf.py` configuration file, add `sphinx_hypothesis` to your extensions list.
+In your `conf.py` configuration file, add `sphinx_comments` to your extensions list.
 E.g.:
 
 ```
 extensions = [
     ...
-    'sphinx_hypothesis'
+    'sphinx_comments'
     ...
 ]
 ```
@@ -35,4 +35,4 @@ right. Clicking the button will copy the code inside!
 ## Customization
 
 If you'd like to customize the look of the copy buttons, you can over-write any of the
-CSS rules specified in the sphinx-hypothesis CSS file ([link](sphinx_hypothesis/_static/copybutton.css))
+CSS rules specified in the sphinx-comments CSS file ([link](sphinx_comments/_static/copybutton.css))

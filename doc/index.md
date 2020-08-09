@@ -10,8 +10,8 @@ readers to log-in and comment on your documentation if they have questions.
 Clone and install the github reposiory
 
 ```bash
-git clone https://github.com/choldgraf/sphinx-hypothesis
-cd sphinx-hypothesis
+git clone https://github.com/choldgraf/sphinx-comments
+cd sphinx-comments
 pip install -e .
 ```
 
@@ -20,7 +20,7 @@ Next, activate the extension by adding it to your `conf.py` file:
 ```python
 ...
 html_extensions = [
-   "sphinx_hypothesis"
+   "sphinx_comments"
 ]
 ```
 
