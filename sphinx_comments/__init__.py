@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 
 
 def shp_static_path(app):
-    static_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '_static'))
+    static_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "_static"))
     app.config.html_static_path.append(static_path)
 
 
@@ -89,9 +89,11 @@ def setup(app):
     app.add_config_value("comments_config", {}, "html")
 
     # Add our static path
-    app.connect('builder-inited', shp_static_path)
-    app.connect('html-page-context', activate_comments)
+    app.connect("builder-inited", shp_static_path)
+    app.connect("html-page-context", activate_comments)
 
-    return {"version": __version__,
-            "parallel_read_safe": True,
-            "parallel_write_safe": True}
+    return {
+        "version": __version__,
+        "parallel_read_safe": True,
+        "parallel_write_safe": True,
+    }
