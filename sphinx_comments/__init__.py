@@ -2,20 +2,23 @@
 
 import os
 from docutils import nodes
+from yaml import safe_load
 from sphinx.util import logging
 
 __version__ = "0.0.1"
 
 logger = logging.getLogger(__name__)
 
+
 def shp_static_path(app):
     static_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '_static'))
     app.config.html_static_path.append(static_path)
 
+
 def activate_comments(app, pagename, templatename, context, doctree):
     """Activate commenting on each page."""
     # Grab config instances
-    config = app.config.comments_config
+    config = app.config.comments_config.copy()
     if not isinstance(config, (dict, type(None))):
         raise ValueError("Comments configuration must be a dictionary.")
 
@@ -26,7 +29,7 @@ def activate_comments(app, pagename, templatename, context, doctree):
     extra_config = {"async": "async"}
 
     # Hypothesis config
-    if config.get("hypothesis"):
+    if ht_config:
         # If hypothesis, we just need to load the js library
         app.add_js_file("https://hypothes.is/embed.js", **extra_config)
 

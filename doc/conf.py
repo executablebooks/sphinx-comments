@@ -19,7 +19,7 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'Sphinx Hypothes.is'
+project = 'Sphinx Comments'
 copyright = '2018, Chris Holdgraf'
 author = 'Chris Holdgraf'
 
@@ -42,10 +42,10 @@ extensions = ['sphinx_comments', "myst_parser"]
 
 comments_config = {
     # "hypothesis": True,
-    "utterances": {
-        "repo": "executablebooks/sphinx-comments",
-    },
-    "dokieli": True
+    # "utterances": {
+    #     "repo": "executablebooks/sphinx-comments",
+    # },
+    # "dokieli": True
 }
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -115,7 +115,7 @@ copybutton_prompt_text = ">>> "
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'SphinxCopybuttondoc'
+htmlhelp_basename = 'SphinxCommentsdoc'
 
 
 # -- Options for LaTeX output ------------------------------------------------
@@ -142,7 +142,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'SphinxCopybutton.tex', 'Sphinx Hypothes.is Documentation',
+    (master_doc, 'SphinxComments.tex', 'Sphinx Comments Documentation',
      'Chris Holdgraf', 'manual'),
 ]
 
@@ -152,7 +152,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'sphinxcopybutton', 'Sphinx Hypothes.is Documentation',
+    (master_doc, 'SphinxComments', 'Sphinx Comments Documentation',
      [author], 1)
 ]
 
@@ -163,7 +163,7 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'SphinxCopybutton', 'Sphinx Hypothes.is Documentation',
-     author, 'SphinxCopybutton', 'One line description of project.',
+    (master_doc, 'SphinxComments', 'Sphinx Comments Documentation',
+     author, 'SphinxComments', 'One line description of project.',
      'Miscellaneous'),
 ]
