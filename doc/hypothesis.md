@@ -6,6 +6,8 @@
 
 Hypothesis is a centralized web services that allows you to comment and annotate arbitrary web pages across the web.
 
+Hypothesis is activated on this page. You can see the web overlay by clicking on the `<` button in the upper-right corner of this page.
+
 ## Activate `hypothes.is`
 
 You can activate `hypothes.is` by adding the following to your `conf.py` file:

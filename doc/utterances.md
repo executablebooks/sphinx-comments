@@ -2,6 +2,8 @@
 
 Utterances is a commenting engine built on top of GitHub issues. It embeds a comment box in your page that users (with a GitHub account) can use to ask questions. These become comments in a GitHub issue in a repository of your choice.
 
+Utterances is activated on this page. You can see the comment box at the bottom of the page's content. Click the "log in" button and you'll be able to post comments!
+
 ## Activate `utteranc.es`
 
 You can activate `utteranc.es` by adding the following to your `conf.py` file:
