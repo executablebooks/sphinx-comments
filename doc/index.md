@@ -46,10 +46,33 @@ You can activate `utteranc.es` by adding the following to your `conf.py` file:
 
 ```python
 comments_config = {
-   "utterances": True
+   "utterances": {
+      "repo": "github-org/github-repo",
+      "optional": "config",
+   }
 }
+```
+
+```{note}
+You can pass optional extra configuration for utterances. See
+[the utterances documentation for your options](https://utteranc.es/#theme).
 ```
 
 Next, [follow the `utteranc.es` configuration instructions](https://utteranc.es/#configuration).
 
 When you build your documentation, pages will now have a comment box at the bottom. If readers log in via GitHub they will be able to post comments that will then map onto issues in your GitHub repository.
+
+## Activate `dokie.li`
+
+You can activate [`dokie.li`](https://dokie.li/)
+by adding the following to your `conf.py` file:
+
+```python
+comments_config = {
+   "dokieli": True
+}
+```
+
+Next, [follow the `dokie.li` configuration instructions](https://dokie.li/).
+
+When you build your documentation, pages will now have an active dokieli overlay.

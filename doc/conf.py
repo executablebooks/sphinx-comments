@@ -41,8 +41,11 @@ release = ''
 extensions = ['sphinx_comments', "myst_parser"]
 
 comments_config = {
-    "hypothesis": True,
-    "utterances": True
+    # "hypothesis": True,
+    "utterances": {
+        "repo": "executablebooks/sphinx-comments",
+    },
+    "dokieli": True
 }
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']

@@ -14,65 +14,72 @@ def shp_static_path(app):
 
 def activate_comments(app, pagename, templatename, context, doctree):
     """Activate commenting on each page."""
+    # Grab config instances
     config = app.config.comments_config
     if not isinstance(config, (dict, type(None))):
         raise ValueError("Comments configuration must be a dictionary.")
 
+    ut_config = config.get("utterances")
+    dk_config = config.get("dokieli")
+    ht_config = config.get("hypothesis")
+
     extra_config = {"async": "async"}
+
+    # Hypothesis config
     if config.get("hypothesis"):
         # If hypothesis, we just need to load the js library
         app.add_js_file("https://hypothes.is/embed.js", **extra_config)
 
-    if config.get("utterances"):
-        dom = """
-            const runWhenDOMLoaded = cb => {
-            if (document.readyState != 'loading') {
-                cb()
-            } else if (document.addEventListener) {
-                document.addEventListener('DOMContentLoaded', cb)
-            } else {
-                document.attachEvent('onreadystatechange', function() {
-                if (document.readyState == 'complete') cb()
-                })
-            }
-            }
-        """
+    # Dokieli config
+    if dk_config:
+        app.add_js_file("https://dokie.li/scripts/dokieli.js", **extra_config)
+        app.add_css_file("https://dokie.li/media/css/dokieli.css", media="all")
+
+    # utterances config
+    if ut_config:
+        if "repo" not in ut_config:
+            raise ValueError("To use utterances, you must provide a repository.")
+        repo = ut_config["repo"]
+
         if doctree:
+            dom = """
+                var commentsRunWhenDOMLoaded = cb => {
+                if (document.readyState != 'loading') {
+                    cb()
+                } else if (document.addEventListener) {
+                    document.addEventListener('DOMContentLoaded', cb)
+                } else {
+                    document.attachEvent('onreadystatechange', function() {
+                    if (document.readyState == 'complete') cb()
+                    })
+                }
+                }
+            """
+            issue_term = ut_config.get("issue-term", "pathname")
+            theme = ut_config.get("theme", "github-light")
+            label = ut_config.get("label", "💬 comment")
+            crossorigin = ut_config.get("crossorigin", "anonymous")
             js = f"""
             {dom}
             var addUtterances = () => {{
-                section = document.querySelectorAll("div.section")[1]
                 var script = document.createElement("script");
                 script.type = "text/javascript";
                 script.src = "https://utteranc.es/client.js";
                 script.async = "async";
 
-                script.setAttribute("repo", "executablebooks/sphinx-comments");
-                script.setAttribute("issue-term", "pathname");
-                script.setAttribute("theme", "github-light");
-                script.setAttribute("label", "💬 comment");
-                script.setAttribute("crossorigin", "anonymous");
+                script.setAttribute("repo", "{repo}");
+                script.setAttribute("issue-term", "{issue_term}");
+                script.setAttribute("theme", "{theme}");
+                script.setAttribute("label", "{label}");
+                script.setAttribute("crossorigin", "{crossorigin}");
+
+                sections = document.querySelectorAll("div.section");
+                section = sections[sections.length-1];
                 section.appendChild(script);
             }}
-            runWhenDOMLoaded(addUtterances)
-
+            commentsRunWhenDOMLoaded(addUtterances);
             """
             app.add_js_file(None, body=js)
-
-
-class UtterancesScriptNode(nodes.Element):
-    """Appends the Utterances script to the output HTML.
-    """
-
-    def __init__(self, rawsource="", repo=None, *children, **attributes):
-        super().__init__("", repo=repo)
-
-    def html(self):
-
-        return script
-
-    def depart_html(self):
-        return "</script>"
 
 
 def setup(app):
