@@ -1,13 +1,9 @@
 """Add a hypothes.is overlay to your Sphinx site."""
 
 import os
-from docutils import nodes
-from yaml import safe_load
-from sphinx.util import logging
+from textwrap import dedent
 
 __version__ = "0.0.1"
-
-logger = logging.getLogger(__name__)
 
 
 def shp_static_path(app):
@@ -31,11 +27,15 @@ def activate_comments(app, pagename, templatename, context, doctree):
     # Hypothesis config
     if ht_config:
         # If hypothesis, we just need to load the js library
-        app.add_js_file("https://hypothes.is/embed.js", **extra_config)
+        app.add_js_file(
+            "https://hypothes.is/embed.js", kind="hypothesis", **extra_config
+        )
 
     # Dokieli config
     if dk_config:
-        app.add_js_file("https://dokie.li/scripts/dokieli.js", **extra_config)
+        app.add_js_file(
+            "https://dokie.li/scripts/dokieli.js", kind="dokieli", **extra_config
+        )
         app.add_css_file("https://dokie.li/media/css/dokieli.css", media="all")
 
     # utterances config
@@ -44,6 +44,7 @@ def activate_comments(app, pagename, templatename, context, doctree):
             raise ValueError("To use utterances, you must provide a repository.")
         repo = ut_config["repo"]
 
+        # Utterances requires a script + config in a specific place, so add to doctree
         if doctree:
             dom = """
                 var commentsRunWhenDOMLoaded = cb => {
@@ -56,13 +57,13 @@ def activate_comments(app, pagename, templatename, context, doctree):
                     if (document.readyState == 'complete') cb()
                     })
                 }
-                }
+            }
             """
             issue_term = ut_config.get("issue-term", "pathname")
             theme = ut_config.get("theme", "github-light")
             label = ut_config.get("label", "💬 comment")
             crossorigin = ut_config.get("crossorigin", "anonymous")
-            js = f"""
+            js = dedent(f"""
             {dom}
             var addUtterances = () => {{
                 var script = document.createElement("script");
@@ -81,8 +82,8 @@ def activate_comments(app, pagename, templatename, context, doctree):
                 section.appendChild(script);
             }}
             commentsRunWhenDOMLoaded(addUtterances);
-            """
-            app.add_js_file(None, body=js)
+            """)
+            app.add_js_file(None, body=js, kind="utterances")
 
 
 def setup(app):
