@@ -1,5 +1,6 @@
 sphinx
 sphinx_book_theme
+myst_parser
 
 # Install ourselves
 .

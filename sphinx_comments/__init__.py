@@ -63,7 +63,8 @@ def activate_comments(app, pagename, templatename, context, doctree):
             theme = ut_config.get("theme", "github-light")
             label = ut_config.get("label", "💬 comment")
             crossorigin = ut_config.get("crossorigin", "anonymous")
-            js = dedent(f"""
+            js = dedent(
+                f"""
             {dom}
             var addUtterances = () => {{
                 var script = document.createElement("script");
@@ -82,7 +83,8 @@ def activate_comments(app, pagename, templatename, context, doctree):
                 section.appendChild(script);
             }}
             commentsRunWhenDOMLoaded(addUtterances);
-            """)
+            """
+            )
             app.add_js_file(None, body=js, kind="utterances")
 
 
