@@ -10,7 +10,7 @@ path_doc_reqs = Path("./doc/requirements.txt")
 doc_reqs = [
     ii
     for ii in path_doc_reqs.read_text(encoding="utf8").split("\n")
-    if ii and not ii.startswith("#")
+    if ii and not ii.startswith("#") and ii != "."
 ]
 # Parse version
 init = Path(__file__).parent.joinpath("sphinx_comments", "__init__.py")
