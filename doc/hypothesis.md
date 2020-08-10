@@ -1,10 +1,10 @@
 # Hypothesis
 
-test
-
 ```{raw} html
 <script async="async" src="https://hypothes.is/embed.js"></script>
 ```
+
+Hypothesis is a centralized web services that allows you to comment and annotate arbitrary web pages across the web.
 
 ## Activate `hypothes.is`
 

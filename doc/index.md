@@ -13,9 +13,7 @@ Currently, these commenting engines are supported:
 Clone and install the github reposiory
 
 ```bash
-git clone https://github.com/choldgraf/sphinx-comments
-cd sphinx-comments
-pip install -e .
+pip install git+https://github.com/choldgraf/sphinx-comments
 ```
 
 Next, activate the extension by adding it to your `conf.py` file:
@@ -27,7 +25,15 @@ html_extensions = [
 ]
 ```
 
+## Configuration
+
+To configure `sphinx-comments` (and to choose the engine you'd like to use),
+you should configure the `comments_config` dictionary in `conf.py`. Instructions
+for doing so can be found in the page for each of the supported engines below.
+
 ```{toctree}
+:caption: Supported engines
+:maxdepth: 2
 hypothesis
 dokieli
 utterances

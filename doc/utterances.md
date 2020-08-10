@@ -1,4 +1,6 @@
-# Utterance
+# Utterances
+
+Utterances is a commenting engine built on top of GitHub issues. It embeds a comment box in your page that users (with a GitHub account) can use to ask questions. These become comments in a GitHub issue in a repository of your choice.
 
 ## Activate `utteranc.es`
 
