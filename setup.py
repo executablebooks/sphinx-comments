@@ -34,6 +34,7 @@ setup(
     extras_require={
         "code_style": ["flake8<3.8.0,>=3.7.0", "black", "pre-commit==1.17.0"],
         "sphinx": doc_reqs,
-        "testing": ["beautifulsoup4", "myst-parser",],
+        "testing": ["beautifulsoup4", "myst-parser", "pytest", "pytest-regressions",]
+        + doc_reqs,
     },
 )
