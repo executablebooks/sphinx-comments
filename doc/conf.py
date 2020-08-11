@@ -20,8 +20,8 @@
 # -- Project information -----------------------------------------------------
 
 project = "Sphinx Comments"
-copyright = "2018, Chris Holdgraf"
-author = "Chris Holdgraf"
+copyright = "2018, Executable Books Project"
+author = "Executable Books Project"
 
 # The short X.Y version
 version = ""
@@ -143,7 +143,7 @@ latex_documents = [
         master_doc,
         "SphinxComments.tex",
         "Sphinx Comments Documentation",
-        "Chris Holdgraf",
+        "Executable Books Project",
         "manual",
     ),
 ]
