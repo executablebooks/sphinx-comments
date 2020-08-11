@@ -16,7 +16,7 @@ click on the links to the left.
 Clone and install the github reposiory
 
 ```bash
-pip install git+https://github.com/choldgraf/sphinx-comments
+pip install sphinx-comments
 ```
 
 Next, activate the extension by adding it to your `conf.py` file:
