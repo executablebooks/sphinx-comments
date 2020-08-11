@@ -78,8 +78,10 @@ def activate_comments(app, config):
             script.setAttribute("crossorigin", "{crossorigin}");
 
             sections = document.querySelectorAll("div.section");
-            section = sections[sections.length-1];
-            section.appendChild(script);
+            if (sections !== null) {{
+                section = sections[sections.length-1];
+                section.appendChild(script);
+            }}
         }}
         commentsRunWhenDOMLoaded(addUtterances);
         """
