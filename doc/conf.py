@@ -45,7 +45,7 @@ comments_config = {
     # "utterances": {
     #     "repo": "executablebooks/sphinx-comments",
     # },
-    # "dokieli": True
+    "dokieli": True
 }
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
