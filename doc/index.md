@@ -8,14 +8,15 @@ Currently, these commenting engines are supported:
 - [utteranc.es](https://utteranc.es/) is a web commenting system that uses GitHub Issues to store and manage comments.
 - [`dokie.li`](https://dokie.li/) is an open source commenting and annotation overlay built on web standards.
 
+For examples of each service, as well as instructions for how to activate it,
+click on the links to the left.
+
 ## Installation
 
 Clone and install the github reposiory
 
 ```bash
-git clone https://github.com/choldgraf/sphinx-comments
-cd sphinx-comments
-pip install -e .
+pip install git+https://github.com/choldgraf/sphinx-comments
 ```
 
 Next, activate the extension by adding it to your `conf.py` file:
@@ -27,7 +28,15 @@ html_extensions = [
 ]
 ```
 
+## Configuration
+
+To configure `sphinx-comments` (and to choose the engine you'd like to use),
+you should configure the `comments_config` dictionary in `conf.py`. Instructions
+for doing so can be found in the page for each of the supported engines below.
+
 ```{toctree}
+:caption: Supported engines
+:maxdepth: 2
 hypothesis
 dokieli
 utterances
