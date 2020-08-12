@@ -5,6 +5,10 @@
 <link media="all" rel="stylesheet" type="text/css" href="https://dokie.li/media/css/dokieli.css" />
 ```
 
+```{warning}
+Dokieli is experimental and may not behave as expected right now!
+```
+
 Dokieli is an open source comments and annotation engine that follows web standards and allows you to have full control over where your comments are aggregated and who has access.
 
 Dokieli is activated on this page. You can see the web overlay by clicking on the hamburger menu in the upper-right corner of this page.

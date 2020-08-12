@@ -24,8 +24,10 @@ var addUtterances = () => {
     script.setAttribute("crossorigin", "anonymous");
 
     sections = document.querySelectorAll("div.section");
-    section = sections[sections.length-1];
-    section.appendChild(script);
+    if (sections !== null) {
+        section = sections[sections.length-1];
+        section.appendChild(script);
+    }
 }
 commentsRunWhenDOMLoaded(addUtterances);
 </script>

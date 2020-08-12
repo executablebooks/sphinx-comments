@@ -11,16 +11,16 @@ def shp_static_path(app):
     app.config.html_static_path.append(static_path)
 
 
-def activate_comments(app, pagename, templatename, context, doctree):
+def activate_comments(app, config):
     """Activate commenting on each page."""
     # Grab config instances
-    config = app.config.comments_config.copy()
-    if not isinstance(config, (dict, type(None))):
+    com_config = app.config.comments_config.copy()
+    if not isinstance(com_config, (dict, type(None))):
         raise ValueError("Comments configuration must be a dictionary.")
 
-    ut_config = config.get("utterances")
-    dk_config = config.get("dokieli")
-    ht_config = config.get("hypothesis")
+    ut_config = com_config.get("utterances")
+    dk_config = com_config.get("dokieli")
+    ht_config = com_config.get("hypothesis")
 
     extra_config = {"async": "async"}
 
@@ -44,48 +44,49 @@ def activate_comments(app, pagename, templatename, context, doctree):
             raise ValueError("To use utterances, you must provide a repository.")
         repo = ut_config["repo"]
 
-        # Utterances requires a script + config in a specific place, so add to doctree
-        if doctree:
-            dom = """
-                var commentsRunWhenDOMLoaded = cb => {
-                if (document.readyState != 'loading') {
-                    cb()
-                } else if (document.addEventListener) {
-                    document.addEventListener('DOMContentLoaded', cb)
-                } else {
-                    document.attachEvent('onreadystatechange', function() {
-                    if (document.readyState == 'complete') cb()
-                    })
-                }
+        # Utterances requires a script + config in a specific place, so do this w/ JS
+        dom = """
+            var commentsRunWhenDOMLoaded = cb => {
+            if (document.readyState != 'loading') {
+                cb()
+            } else if (document.addEventListener) {
+                document.addEventListener('DOMContentLoaded', cb)
+            } else {
+                document.attachEvent('onreadystatechange', function() {
+                if (document.readyState == 'complete') cb()
+                })
             }
-            """
-            issue_term = ut_config.get("issue-term", "pathname")
-            theme = ut_config.get("theme", "github-light")
-            label = ut_config.get("label", "💬 comment")
-            crossorigin = ut_config.get("crossorigin", "anonymous")
-            js = dedent(
-                f"""
-            {dom}
-            var addUtterances = () => {{
-                var script = document.createElement("script");
-                script.type = "text/javascript";
-                script.src = "https://utteranc.es/client.js";
-                script.async = "async";
+        }
+        """
+        issue_term = ut_config.get("issue-term", "pathname")
+        theme = ut_config.get("theme", "github-light")
+        label = ut_config.get("label", "💬 comment")
+        crossorigin = ut_config.get("crossorigin", "anonymous")
+        js = dedent(
+            f"""
+        {dom}
+        var addUtterances = () => {{
+            var script = document.createElement("script");
+            script.type = "text/javascript";
+            script.src = "https://utteranc.es/client.js";
+            script.async = "async";
 
-                script.setAttribute("repo", "{repo}");
-                script.setAttribute("issue-term", "{issue_term}");
-                script.setAttribute("theme", "{theme}");
-                script.setAttribute("label", "{label}");
-                script.setAttribute("crossorigin", "{crossorigin}");
+            script.setAttribute("repo", "{repo}");
+            script.setAttribute("issue-term", "{issue_term}");
+            script.setAttribute("theme", "{theme}");
+            script.setAttribute("label", "{label}");
+            script.setAttribute("crossorigin", "{crossorigin}");
 
-                sections = document.querySelectorAll("div.section");
+            sections = document.querySelectorAll("div.section");
+            if (sections !== null) {{
                 section = sections[sections.length-1];
                 section.appendChild(script);
             }}
-            commentsRunWhenDOMLoaded(addUtterances);
-            """
-            )
-            app.add_js_file(None, body=js, kind="utterances")
+        }}
+        commentsRunWhenDOMLoaded(addUtterances);
+        """
+        )
+        app.add_js_file(None, body=js, kind="utterances")
 
 
 def setup(app):
@@ -93,7 +94,7 @@ def setup(app):
 
     # Add our static path
     app.connect("builder-inited", shp_static_path)
-    app.connect("html-page-context", activate_comments)
+    app.connect("config-inited", activate_comments)
 
     return {
         "version": __version__,
