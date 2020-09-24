@@ -23,7 +23,7 @@ Next, activate the extension by adding it to your `conf.py` file:
 
 ```python
 ...
-html_extensions = [
+extensions = [
    "sphinx_comments"
 ]
 ```
