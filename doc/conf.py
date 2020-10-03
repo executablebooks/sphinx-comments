@@ -45,7 +45,7 @@ comments_config = {
     # "utterances": {
     #     "repo": "executablebooks/sphinx-comments",
     # },
-    # "dokieli": True
+    "dokieli": True
 }
 
 
