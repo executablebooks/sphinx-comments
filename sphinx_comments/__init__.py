@@ -77,8 +77,8 @@ def activate_comments(app, config):
             script.setAttribute("label", "{label}");
             script.setAttribute("crossorigin", "{crossorigin}");
 
-            sections = document.querySelectorAll("div.section");
-            if (sections !== null) {{
+            sections = document.querySelectorAll("div.section,section");
+            if (sections !== null && sections.length > 0) {{
                 section = sections[sections.length-1];
                 section.appendChild(script);
             }}
